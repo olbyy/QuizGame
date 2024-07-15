@@ -1,14 +1,16 @@
-class User:
-    def __init__(self):
-        self.name = "Tony"
+from question_model import Question
+from data import question_data
+from quiz_brain import QuizBrain
+import random
+question_bank = []
+score = 0
+is_playing = True
 
-    def get_name(self):
-        return self.name
+for i in question_data:
+    question_bank.append(Question(i["category"], i["type"], i["question"], i["correct_answer"], i["incorrect_answers"]))
+quiz = QuizBrain(question_bank)
 
-    def set_name(self, name):
-        self.name = name
+while quiz.still_has_questions():
+    quiz.next_question()
 
-user_1 = User()
-print(user_1.get_name())
-user_1.set_name("Mike")
-print(user_1.get_name())
+print(f"Your final score was {quiz.score}/{quiz.question_number}")
